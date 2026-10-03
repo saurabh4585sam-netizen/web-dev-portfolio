@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f7f6;
+      padding: 15px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 380px;
+      margin: 20px auto;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .btn-fetch { background-color: #27ae60; }
+    .btn-clear { background-color: #e74c3c; }
+
+    .source-badge {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+
+    .badge-cache { background: #e8f8f5; color: #16a085; border: 1px solid #a3e4d7; }
+    .badge-api { background: #ebf5fb; color: #2980b9; border: 1px solid #a9cce3; }
+
+    .todo-item {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      margin-bottom: 8px;
+      font-size: 14px;
+      border-left: 4px solid #f39c12;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>⚡ API Data Caching System</h2>
+
+    <button class="btn btn-fetch" onclick="loadData()">🔄 Load Data (Cache First)</button>
+    <button class="btn btn-clear" onclick="clearCache()">🗑️ Clear Cache Memory</button>
+
+    <div id="badge"></div>
+    <div id="dataList"></div>
+  </div>
+
+  <script>
+    async function loadData() {
+      let badgeDiv = document.getElementById("badge");
+      let dataList = document.getElementById("dataList");
+      
+      // 1. Check if data is already saved in LocalStorage
+      let cachedData = localStorage.getItem("cached_todos");
+
+      if (cachedData) {
+        // Load instantly from Browser LocalStorage
+        let todos = JSON.parse(cachedData);
+        badgeDiv.innerHTML = `<div class="source-badge badge-cache">⚡ Loaded Instantly from LocalStorage (Cache)!</div>`;
+        renderList(todos);
+      } else {
+        // Fetch from Remote Server API
+        badgeDiv.innerHTML = `<div class="source-badge badge-api">🌐 Fetching Fresh Data from Server API...</div>`;
+        
+        try {
+          let response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=4");
+          let todos = await response.json();
+
+          // Save to LocalStorage for future loads
+          localStorage.setItem("cached_todos", JSON.stringify(todos));
+
+          badgeDiv.innerHTML = `<div class="source-badge badge-api">🌐 Fetched from Server API & Saved to Cache!</div>`;
+          renderList(todos);
+        } catch (error) {
+          badgeDiv.innerHTML = `<div class="source-badge" style="background:#fdebd0; color:#b9770e;">⚠️ Failed to Fetch API Data</div>`;
+        }
+      }
+    }
+
+    function renderList(items) {
+      let dataList = document.getElementById("dataList");
+      dataList.innerHTML = "";
+      items.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "todo-item";
+        div.innerHTML = `📌 <b>${item.title}</b>`;
+        dataList.appendChild(div);
+      });
+    }
+
+    function clearCache() {
+      localStorage.removeItem("cached_todos");
+      document.getElementById("badge").innerHTML = "";
+      document.getElementById("dataList").innerHTML = `<p style="text-align:center; color:#7f8c8d;">Cache Cleared!</p>`;
+    }
+  </script>
+
+</body>
+</html>
