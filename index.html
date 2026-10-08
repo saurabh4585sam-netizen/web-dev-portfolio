@@ -3,47 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Web Dev Portfolio</title>
+  <title>Saurabh Sharma | Web Dev Portfolio</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f7f6;
-      text-align: center;
-    }
-    h1 {
       color: #333;
+      padding: 20px;
     }
-    .project-card {
+    header {
+      text-align: center;
+      padding: 30px 10px;
       background: white;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
     }
-    a {
+    header h1 {
+      font-size: 26px;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #666;
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+    .card p {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .btn {
       display: inline-block;
-      text-decoration: none;
-      background: #007bff;
+      text-align: center;
+      background-color: #007bff;
       color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
       font-weight: bold;
+      font-size: 14px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
 <body>
 
-  <h1>🚀 Web Dev Portfolio</h1>
-  <p>Welcome to my 60-Day Web Development Journey!</p>
+  <header>
+    <h1>🚀 Saurabh's Web Dev Portfolio</h1>
+    <p>Welcome to my 60-Day Web Development Journey!</p>
+  </header>
 
-  <div class="project-card">
-    <h3>Day 55: API Data Caching</h3>
-    <p>A web app showing how to cache API responses locally.</p>
-    <a href="day55.html">View Project</a>
+  <div class="grid">
+    <!-- Day 55 Project Card -->
+    <div class="card">
+      <div>
+        <h3>Day 55: API Data Caching</h3>
+        <p>A web application demonstrating API fetching and local caching using LocalStorage.</p>
+      </div>
+      <a href="day55.html" class="btn">View Project</a>
+    </div>
+
+    <!-- Future Projects Card Placeholder -->
+    <div class="card">
+      <div>
+        <h3>More Projects Coming Soon</h3>
+        <p>Building advanced frontend and full-stack web applications in the next phase!</p>
+      </div>
+      <a href="#" class="btn" style="background:#6c757d; pointer-events: none;">In Progress</a>
+    </div>
   </div>
+
+  <footer>
+    <p>© 2026 Saurabh Sharma | Built with HTML, CSS & JavaScript</p>
+  </footer>
 
 </body>
 </html>
